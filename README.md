@@ -2,7 +2,7 @@ Laboratorio de Python
 
 Grupo: 18
 
-Integrantes: Bentolilla Elias, Calderón Jazmín, Alcorta Tomas, Binaghi Lucio, Mac Lachlan
+Integrantes: Bentolilla Elias, Calderón  Macarena Jazmín, Alcorta Tomas, Binaghi Lucio, Mac Lachlan
 
 Comisión: 3
 
