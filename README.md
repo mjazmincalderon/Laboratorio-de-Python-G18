@@ -20,12 +20,4 @@ Instrucciones de uso: Al iniciar el programa se mostrará un menú con las difer
 7. Ver estadísticas: consultar un resumen con la cantidad de pacientes registrados, turnos pendientes, atendidos, cancelados, promedio de edad y cantidad de turnos por especialidad.
 8. Salir: finalizar la ejecución del programa.
 
-Instrucciones de uso: Al iniciar el programa se mostrará un menú con las diferentes opciones disponibles. Para utilizar correctamente el sistema se recomienda seguir el siguiente orden:
-1. Registrar paciente: ingresar los datos personales del paciente. El sistema validará que el DNI no se encuentre registrado previamente.
-2. Asignar turno: seleccionar un paciente registrado, elegir la especialidad médica, la fecha, el horario y el nivel de prioridad. El sistema verificará la disponibilidad del turno antes de asignarlo.
-3. Listar pacientes: visualizar todos los pacientes registrados en el sistema.
-4. Listar turnos: consultar los turnos asignados junto con su especialidad, prioridad y estado.
-5. Atender siguiente paciente: registrar la atención del próximo paciente pendiente, respetando el orden de prioridad y de asignación.
-6. Cancelar turno: cancelar un turno pendiente ingresando su número de identificación.
-7. Ver estadísticas: consultar un resumen con la cantidad de pacientes registrados, turnos pendientes, atendidos, cancelados, promedio de edad y cantidad de turnos por especialidad.
-8. Salir: finalizar la ejecución del programa.
+Uso de Inteligencia Artificial: Durante el desarrollo de este proyecto se utilizaron herramientas de Inteligencia Artificial como apoyo para resolver dudas, analizar errores, mejorar la organización del código y redactar parte de la documentación del repositorio. Las respuestas obtenidas fueron revisadas, adaptadas y validadas antes de ser incorporadas al proyecto. Todas las decisiones de diseño, la lógica implementada, las estructuras de datos utilizadas, las validaciones realizadas y el funcionamiento general del sistema fueron comprendidos por los integrantes del grupo, quienes pueden justificar su implementación y explicar el comportamiento del programa. La Inteligencia Artificial fue utilizada como una herramienta de asistencia al aprendizaje y al desarrollo, sin reemplazar el análisis, la comprensión ni el trabajo realizado por los integrantes del equipo.
