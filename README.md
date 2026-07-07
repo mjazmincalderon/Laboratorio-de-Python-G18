@@ -1,10 +1,10 @@
 Laboratorio de Python
 
-Grupo: 18
+Grupo: c18
 
 Integrantes: Bentolilla Elías Ezequiel, Calderón  Macarena Jazmín, Alcorta Tomás Misael, Binaghi Lucio Tomás, Mac Lachlan Guadalupe
 
-Comisión: 3
+Comisión: 1.3
 
 Descripción General: Este proyecto consiste en un sistema de gestión de turnos hospitalarios desarrollado en Python. La aplicación permite registrar pacientes, almacenar su información personal y administrar la asignación de turnos para distintas especialidades médicas.
 El sistema verifica que los datos ingresados sean válidos, evita registrar pacientes duplicados y controla que no existan conflictos de horarios al momento de asignar un turno. Además, cada turno puede clasificarse según un nivel de prioridad (alta, media o baja), lo que permite que la atención de los pacientes se realice respetando el orden de urgencia y, en caso de empate, el orden de asignación.
