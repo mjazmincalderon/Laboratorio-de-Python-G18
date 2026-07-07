@@ -138,6 +138,42 @@ def turno_disponible(turnos, especialidad, fecha, hora):
             and turno["fecha"] == fecha
             and turno["hora"] == hora
         )
+
         if mismo_horario and turno["estado"] != "Cancelado":
             return False
     return True
+    def paciente_disponible(turnos, dni, fecha, hora):
+    for turno in turnos:
+        mismo_paciente = turno["dni"] == dni
+        mismo_horario = turno["fecha"] == fecha and turno["hora"] == hora
+        if mismo_paciente and mismo_horario and turno["estado"] != "Cancelado":
+            return False
+    return True
+
+
+def asignar_turno(pacientes, turnos, contador_turnos):
+    mostrar_titulo("Asignacion de turno")
+    dni = pedir_dni()
+    paciente = buscar_paciente(pacientes, dni)
+
+    if paciente is None:
+        print("No existe un paciente con ese DNI. Primero debe registrarlo.")
+        return contador_turnos
+
+    especialidad = elegir_especialidad()
+
+    while True:
+        fecha = pedir_fecha()
+        hora = pedir_hora()
+
+        if not turno_disponible(turnos, especialidad, fecha, hora):
+            print("Ese horario ya esta ocupado para la especialidad seleccionada.")
+            print("Ingrese otra fecha u otro horario.")
+            continue
+
+        if not paciente_disponible(turnos, paciente["dni"], fecha, hora):
+            print("Ese paciente ya tiene un turno asignado en esa fecha y hora.")
+            print("Ingrese otra fecha u otro horario.")
+            continue
+
+        break
