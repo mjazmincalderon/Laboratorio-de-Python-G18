@@ -71,3 +71,73 @@ def pedir_hora():
             return hora_turno.strftime("%H:%M")
         except ValueError:
             print("Error: ingrese una hora valida con formato hh:mm.")
+def elegir_especialidad():
+    print("\nEspecialidades disponibles:")
+    for indice, especialidad in enumerate(ESPECIALIDADES, start=1):
+        print(f"{indice}. {especialidad}")
+    opcion = pedir_entero("Seleccione una especialidad: ", 1, len(ESPECIALIDADES))
+    return ESPECIALIDADES[opcion - 1]
+
+
+def elegir_prioridad():
+    print("\nPrioridad segun urgencia:")
+    for numero, nombre in PRIORIDADES.items():
+        print(f"{numero}. {nombre}")
+    opcion = pedir_entero("Seleccione la prioridad: ", 1, len(PRIORIDADES))
+    return opcion
+
+
+def buscar_paciente(pacientes, dni):
+    for paciente in pacientes:
+        if paciente["dni"] == dni:
+            return paciente
+    return None
+
+
+def registrar_paciente(pacientes):
+    mostrar_titulo("Registro de paciente")
+    dni = pedir_dni()
+
+    if buscar_paciente(pacientes, dni):
+        print("Ya existe un paciente registrado con ese DNI.")
+        return
+
+    nombre = pedir_texto("Nombre y apellido: ")
+    edad = pedir_entero("Edad: ", 0, 120)
+    telefono = pedir_texto("Telefono de contacto: ")
+
+    paciente = {
+        "dni": dni,
+        "nombre": nombre,
+        "edad": edad,
+        "telefono": telefono,
+    }
+    pacientes.append(paciente)
+    print("Paciente registrado correctamente.")
+
+
+def listar_pacientes(pacientes):
+    mostrar_titulo("Pacientes registrados")
+    if not pacientes:
+        print("No hay pacientes registrados.")
+        return
+
+    for paciente in pacientes:
+        print(
+            f"DNI: {paciente['dni']} | "
+            f"Nombre: {paciente['nombre']} | "
+            f"Edad: {paciente['edad']} | "
+            f"Telefono: {paciente['telefono']}"
+        )
+
+
+def turno_disponible(turnos, especialidad, fecha, hora):
+    for turno in turnos:
+        mismo_horario = (
+            turno["especialidad"] == especialidad
+            and turno["fecha"] == fecha
+            and turno["hora"] == hora
+        )
+        if mismo_horario and turno["estado"] != "Cancelado":
+            return False
+    return True
