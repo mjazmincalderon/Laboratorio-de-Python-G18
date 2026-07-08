@@ -58,6 +58,9 @@ def pedir_fecha():
         fecha = pedir_texto("Fecha del turno (dd/mm/aaaa): ")
         try:
             fecha_turno = datetime.strptime(fecha, "%d/%m/%Y").date()
+            if fecha_turno < datetime.today().date():
+                print("Error: la fecha del turno no puede ser anterior al dia actual.")
+                continue
             return fecha_turno.strftime("%d/%m/%Y")
         except ValueError:
             print("Error: ingrese una fecha valida con formato dd/mm/aaaa.")
@@ -71,6 +74,8 @@ def pedir_hora():
             return hora_turno.strftime("%H:%M")
         except ValueError:
             print("Error: ingrese una hora valida con formato hh:mm.")
+
+
 def elegir_especialidad():
     print("\nEspecialidades disponibles:")
     for indice, especialidad in enumerate(ESPECIALIDADES, start=1):
@@ -131,6 +136,38 @@ def listar_pacientes(pacientes):
         )
 
 
+def buscar_paciente_por_dni(pacientes):
+    mostrar_titulo("Busqueda de paciente")
+    dni = pedir_dni()
+    paciente = buscar_paciente(pacientes, dni)
+
+    if paciente is None:
+        print("No se encontro un paciente registrado con ese DNI.")
+        return
+
+    print("Paciente encontrado:")
+    print(f"DNI: {paciente['dni']}")
+    print(f"Nombre: {paciente['nombre']}")
+    print(f"Edad: {paciente['edad']}")
+    print(f"Telefono: {paciente['telefono']}")
+
+
+def modificar_telefono_paciente(pacientes):
+    mostrar_titulo("Modificar telefono de paciente")
+    dni = pedir_dni()
+    paciente = buscar_paciente(pacientes, dni)
+
+    if paciente is None:
+        print("No se encontro un paciente registrado con ese DNI.")
+        return
+
+    print(f"Paciente: {paciente['nombre']}")
+    print(f"Telefono actual: {paciente['telefono']}")
+    nuevo_telefono = pedir_texto("Nuevo telefono: ")
+    paciente["telefono"] = nuevo_telefono
+    print("Telefono actualizado correctamente.")
+
+
 def turno_disponible(turnos, especialidad, fecha, hora):
     for turno in turnos:
         mismo_horario = (
@@ -138,11 +175,12 @@ def turno_disponible(turnos, especialidad, fecha, hora):
             and turno["fecha"] == fecha
             and turno["hora"] == hora
         )
-
         if mismo_horario and turno["estado"] != "Cancelado":
             return False
     return True
-    def paciente_disponible(turnos, dni, fecha, hora):
+
+
+def paciente_disponible(turnos, dni, fecha, hora):
     for turno in turnos:
         mismo_paciente = turno["dni"] == dni
         mismo_horario = turno["fecha"] == fecha and turno["hora"] == hora
@@ -177,7 +215,7 @@ def asignar_turno(pacientes, turnos, contador_turnos):
             continue
 
         break
-        
+
     prioridad = elegir_prioridad()
     contador_turnos += 1
     turno = {
@@ -263,6 +301,11 @@ def mostrar_estadisticas(pacientes, turnos):
     atendidos = 0
     cancelados = 0
     suma_edades = 0
+    prioridades = {
+        1: 0,
+        2: 0,
+        3: 0,
+    }
 
     for paciente in pacientes:
         suma_edades += paciente["edad"]
@@ -274,6 +317,7 @@ def mostrar_estadisticas(pacientes, turnos):
             atendidos += 1
         elif turno["estado"] == "Cancelado":
             cancelados += 1
+        prioridades[turno["prioridad"]] += 1
 
     promedio_edad = suma_edades / len(pacientes) if pacientes else 0
 
@@ -283,7 +327,8 @@ def mostrar_estadisticas(pacientes, turnos):
     print(f"Pacientes atendidos: {atendidos}")
     print(f"Turnos cancelados: {cancelados}")
     print(f"Promedio de edad de pacientes: {promedio_edad:.1f}")
-print("\n" + "-" * 60)
+
+    print("\n" + "-" * 60)
     print("\nTurnos por especialidad:")
     for especialidad in ESPECIALIDADES:
         contador = 0
@@ -291,6 +336,10 @@ print("\n" + "-" * 60)
             if turno["especialidad"] == especialidad:
                 contador += 1
         print(f"- {especialidad}: {contador}")
+
+    print("\nTurnos por prioridad:")
+    for numero, nombre in PRIORIDADES.items():
+        print(f"- Prioridad {nombre}: {prioridades[numero]}")
     print("-" * 60)
     input("\nPresione ENTER para volver al menu principal...")
 
@@ -299,12 +348,14 @@ def mostrar_menu():
     print("\nSistema de turnos hospitalarios")
     print("1. Registrar paciente")
     print("2. Listar pacientes")
-    print("3. Asignar turno")
-    print("4. Listar turnos")
-    print("5. Atender siguiente paciente")
-    print("6. Cancelar turno")
-    print("7. Ver estadisticas")
-    print("8. Salir")
+    print("3. Buscar paciente por DNI")
+    print("4. Modificar telefono de paciente")
+    print("5. Asignar turno")
+    print("6. Listar turnos")
+    print("7. Atender siguiente paciente")
+    print("8. Cancelar turno")
+    print("9. Ver estadisticas")
+    print("10. Salir")
 
 
 def ejecutar_sistema():
@@ -314,28 +365,32 @@ def ejecutar_sistema():
 
     while True:
         mostrar_menu()
-        opcion = pedir_entero("Seleccione una opcion: ", 1, 8)
+        opcion = pedir_entero("Seleccione una opcion: ", 1, 10)
 
         if opcion == 1:
             registrar_paciente(pacientes)
         elif opcion == 2:
             listar_pacientes(pacientes)
         elif opcion == 3:
-            contador_turnos = asignar_turno(pacientes, turnos, contador_turnos)
+            buscar_paciente_por_dni(pacientes)
         elif opcion == 4:
-            listar_turnos(turnos)
+            modificar_telefono_paciente(pacientes)
         elif opcion == 5:
-            atender_paciente(turnos)
+            contador_turnos = asignar_turno(pacientes, turnos, contador_turnos)
         elif opcion == 6:
-            cancelar_turno(turnos)
+            listar_turnos(turnos)
         elif opcion == 7:
-            mostrar_estadisticas(pacientes, turnos)
+            atender_paciente(turnos)
         elif opcion == 8:
+            cancelar_turno(turnos)
+        elif opcion == 9:
+            mostrar_estadisticas(pacientes, turnos)
+        elif opcion == 10:
             print("Gracias por utilizar el sistema.")
             break
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     try:
         ejecutar_sistema()
     except KeyboardInterrupt:
