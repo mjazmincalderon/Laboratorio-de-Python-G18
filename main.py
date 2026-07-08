@@ -283,3 +283,60 @@ def mostrar_estadisticas(pacientes, turnos):
     print(f"Pacientes atendidos: {atendidos}")
     print(f"Turnos cancelados: {cancelados}")
     print(f"Promedio de edad de pacientes: {promedio_edad:.1f}")
+print("\n" + "-" * 60)
+    print("\nTurnos por especialidad:")
+    for especialidad in ESPECIALIDADES:
+        contador = 0
+        for turno in turnos:
+            if turno["especialidad"] == especialidad:
+                contador += 1
+        print(f"- {especialidad}: {contador}")
+    print("-" * 60)
+    input("\nPresione ENTER para volver al menu principal...")
+
+
+def mostrar_menu():
+    print("\nSistema de turnos hospitalarios")
+    print("1. Registrar paciente")
+    print("2. Listar pacientes")
+    print("3. Asignar turno")
+    print("4. Listar turnos")
+    print("5. Atender siguiente paciente")
+    print("6. Cancelar turno")
+    print("7. Ver estadisticas")
+    print("8. Salir")
+
+
+def ejecutar_sistema():
+    pacientes = []
+    turnos = []
+    contador_turnos = 0
+
+    while True:
+        mostrar_menu()
+        opcion = pedir_entero("Seleccione una opcion: ", 1, 8)
+
+        if opcion == 1:
+            registrar_paciente(pacientes)
+        elif opcion == 2:
+            listar_pacientes(pacientes)
+        elif opcion == 3:
+            contador_turnos = asignar_turno(pacientes, turnos, contador_turnos)
+        elif opcion == 4:
+            listar_turnos(turnos)
+        elif opcion == 5:
+            atender_paciente(turnos)
+        elif opcion == 6:
+            cancelar_turno(turnos)
+        elif opcion == 7:
+            mostrar_estadisticas(pacientes, turnos)
+        elif opcion == 8:
+            print("Gracias por utilizar el sistema.")
+            break
+
+
+if _name_ == "_main_":
+    try:
+        ejecutar_sistema()
+    except KeyboardInterrupt:
+        print("\nPrograma finalizado por el usuario.")
