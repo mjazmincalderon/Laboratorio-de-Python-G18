@@ -177,3 +177,109 @@ def asignar_turno(pacientes, turnos, contador_turnos):
             continue
 
         break
+        
+    prioridad = elegir_prioridad()
+    contador_turnos += 1
+    turno = {
+        "id": contador_turnos,
+        "dni": paciente["dni"],
+        "paciente": paciente["nombre"],
+        "especialidad": especialidad,
+        "fecha": fecha,
+        "hora": hora,
+        "prioridad": prioridad,
+        "estado": "Pendiente",
+    }
+    turnos.append(turno)
+    print(f"Turno asignado correctamente. Numero de turno: {turno['id']}")
+    return contador_turnos
+
+
+def listar_turnos(turnos):
+    mostrar_titulo("Listado de turnos")
+    if not turnos:
+        print("No hay turnos cargados.")
+        return
+
+    for turno in turnos:
+        print(
+            f"Turno {turno['id']} | "
+            f"{turno['fecha']} {turno['hora']} | "
+            f"{turno['especialidad']} | "
+            f"Paciente: {turno['paciente']} | "
+            f"Prioridad: {PRIORIDADES[turno['prioridad']]} | "
+            f"Estado: {turno['estado']}"
+        )
+
+
+def obtener_siguiente_turno(turnos):
+    pendientes = [turno for turno in turnos if turno["estado"] == "Pendiente"]
+    if not pendientes:
+        return None
+    return sorted(pendientes, key=lambda turno: (turno["prioridad"], turno["id"]))[0]
+
+
+def atender_paciente(turnos):
+    mostrar_titulo("Atencion de paciente")
+    turno = obtener_siguiente_turno(turnos)
+
+    if turno is None:
+        print("No hay pacientes pendientes de atencion.")
+        return
+
+    turno["estado"] = "Atendido"
+    print(
+        f"Se atendio a {turno['paciente']} "
+        f"({turno['especialidad']}, prioridad {PRIORIDADES[turno['prioridad']]})."
+    )
+
+
+def cancelar_turno(turnos):
+    mostrar_titulo("Cancelacion de turno")
+    if not turnos:
+        print("No hay turnos para cancelar.")
+        return
+
+    numero_turno = pedir_entero("Ingrese el numero de turno a cancelar: ", 1)
+    for turno in turnos:
+        if turno["id"] == numero_turno:
+            if turno["estado"] == "Atendido":
+                print("No se puede cancelar un turno que ya fue atendido.")
+                return
+            if turno["estado"] == "Cancelado":
+                print("Ese turno ya se encontraba cancelado.")
+                return
+            turno["estado"] = "Cancelado"
+            print("Turno cancelado correctamente.")
+            return
+
+    print("No se encontro un turno con ese numero.")
+
+
+def mostrar_estadisticas(pacientes, turnos):
+    mostrar_titulo("Estadisticas de atencion")
+    total_turnos = len(turnos)
+    pendientes = 0
+    atendidos = 0
+    cancelados = 0
+    suma_edades = 0
+
+    for paciente in pacientes:
+        suma_edades += paciente["edad"]
+
+    for turno in turnos:
+        if turno["estado"] == "Pendiente":
+            pendientes += 1
+        elif turno["estado"] == "Atendido":
+            atendidos += 1
+        elif turno["estado"] == "Cancelado":
+            cancelados += 1
+
+    promedio_edad = suma_edades / len(pacientes) if pacientes else 0
+
+    print(f"Pacientes registrados: {len(pacientes)}")
+    print(f"Turnos cargados: {total_turnos}")
+    print(f"Turnos pendientes: {pendientes}")
+    print(f"Pacientes atendidos: {atendidos}")
+    print(f"Turnos cancelados: {cancelados}")
+    print(f"Promedio de edad de pacientes: {promedio_edad:.1f}")
