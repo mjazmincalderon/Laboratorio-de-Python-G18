@@ -21,7 +21,7 @@ Instrucciones de uso: Al iniciar el programa se mostrará un menú con las difer
 8. Salir: finalizar la ejecución del programa.
 
 Uso de Inteligencia Artificial: Durante el desarrollo de este proyecto se utilizaron herramientas de Inteligencia Artificial como apoyo en tareas puntuales, por ejemplo para organizar la estructura general del programa, proponer nombres de funciones, revisar validaciones de datos y analizar errores durante las pruebas.
-También se utilizó IA para pensar posibles casos de prueba, como el ingreso de un DNI incorrecto, una fecha con formato inválido, un turno en un horario ya ocupado o un paciente intentando registrar dos turnos en la misma fecha y hora.
+Se utilizó IA mas que nada para pensar posibles casos de prueba, como el ingreso de un DNI incorrecto, una fecha con formato inválido, un turno en un horario ya ocupado o un paciente intentando registrar dos turnos en la misma fecha y hora.
 Las respuestas obtenidas fueron revisadas, adaptadas y validadas antes de ser incorporadas al proyecto. No se copiaron soluciones sin analizarlas, sino que el grupo evaluó si eran coherentes con el sistema y con los contenidos trabajados en la materia.
 Todas las decisiones de diseño, la lógica implementada, las estructuras de datos utilizadas, las funciones creadas, las validaciones realizadas y el funcionamiento general del sistema fueron comprendidos por los integrantes del grupo, quienes pueden justificar su implementación y explicar el comportamiento del programa.
 La Inteligencia Artificial fue utilizada como una herramienta de asistencia al aprendizaje y al desarrollo, sin reemplazar el análisis, la comprensión ni el trabajo realizado por los integrantes del equipo.
