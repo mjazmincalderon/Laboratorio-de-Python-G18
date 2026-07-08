@@ -2,7 +2,13 @@ Laboratorio de Python
 
 Grupo: c18
 
-Integrantes: Bentolilla Elías Ezequiel, Calderón  Macarena Jazmín, Alcorta Tomás Misael, Binaghi Lucio Tomás, Mac Lachlan Guadalupe
+Integrantes: 
+•	Bentolilla Elías Ezequiel 
+•	Calderón Macarena Jazmín 
+•	Alcorta Tomás Misael
+•	Binaghi Lucio Tomás
+•	Mac Lachlan Guadalupe
+
 
 Comisión: 1.3
 
